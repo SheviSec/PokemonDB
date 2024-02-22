@@ -24,6 +24,7 @@ export const PokemonTable = ({ pokemonList, isLoading }: PokemonTableProps) => {
             <TableCell>Name</TableCell>
             <TableCell>Height</TableCell>
             <TableCell>Weight</TableCell>
+            <TableCell>Types</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -41,15 +42,23 @@ export const PokemonTable = ({ pokemonList, isLoading }: PokemonTableProps) => {
                       imgProps={{ style: { maxWidth: "150px" } }}
                     />
                   </TableCell>
-                  {/* <TableCell>
-                    {pokemon.types.map((type) => (
-                      <Typography>{type.type.name}</Typography>
-                    ))}
-                  </TableCell> */}
 
                   <TableCell>{pokemon.name}</TableCell>
                   <TableCell>{pokemon.height}</TableCell>
                   <TableCell>{pokemon.weight}</TableCell>
+                  <TableCell>
+                    {pokemon.types.map((type) => (
+                      <img
+                        key={type.type.name}
+                        src={`/img/pokemon-types-icons/${type.type.name}.svg`}
+                        width={"24px"}
+                        height={"24px"}
+                      />
+                      //   <Typography key={type.type.name}>
+                      //     {type.type.name}
+                      //   </Typography>
+                    ))}
+                  </TableCell>
                 </TableRow>
               );
             })

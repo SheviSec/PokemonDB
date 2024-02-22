@@ -1,10 +1,12 @@
 import { PokemonList } from "@/components/pokemon-list.component";
 import { Container } from "@mui/material";
 
-export const HomePage = () => {
+const HomePage = () => {
   return (
     <Container>
       <PokemonList />
     </Container>
   );
 };
+
+export default HomePage;
