@@ -33,7 +33,13 @@ export const PokemonTable = ({ pokemonList, isLoading }: PokemonTableProps) => {
               return (
                 <TableRow key={pokemon.id}>
                   <TableCell>
-                    <PokemonImg url={pokemon.sprites.front_default} />
+                    <PokemonImg
+                      url={
+                        pokemon.sprites.other?.["official-artwork"]
+                          .front_default ?? null
+                      }
+                      imgProps={{ style: { maxWidth: "150px" } }}
+                    />
                   </TableCell>
                   {/* <TableCell>
                     {pokemon.types.map((type) => (
