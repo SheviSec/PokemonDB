@@ -8,11 +8,21 @@ type PokemonList = {
   results: Pokemon[];
 };
 
-export const usePokemon = () => {
+type UsePokemonReturn = {
+  pokemonList: Pokemon[] | undefined;
+  isLoading: boolean;
+  error: Error | undefined;
+  totalItems: number;
+};
+
+type pagination = {};
+
+export const usePokemon = (): UsePokemonReturn => {
   const [data, setData] = useState<PokemonList | undefined>();
   const [isLoading, setLoading] = useState(true);
   const [error, setError] = useState<Error | undefined>();
   const [pokemonList, setPokemonList] = useState<Pokemon[] | undefined>();
+  const [pagination, setPagination] = useState();
 
   /**
    * Get pokemon list, only names and url to get individual data
@@ -59,5 +69,5 @@ export const usePokemon = () => {
       });
   }, [data, setError, setPokemonList]);
 
-  return { pokemonList, isLoading, error };
+  return { pokemonList, isLoading, error, totalItems: data?.count ?? 0 };
 };
