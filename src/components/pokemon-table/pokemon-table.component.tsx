@@ -7,29 +7,32 @@ import {
 import { POKEMON_TABLE_COLUMNS } from "./pokemon-table-columns.helper";
 import { useState } from "react";
 import { PokemonList } from "../pokemon-list.component";
+import { PaginationModel } from "@/hooks/use-pokemon.hook";
 
 type PokemonTableProps = {
   pokemonList: Pokemon[];
   isLoading: boolean;
   totalItems: number;
+  paginationModel: PaginationModel;
+  chagePaginationModel: (paginationModel: PaginationModel) => void;
 };
 export const PokemonTable = ({
   pokemonList,
   isLoading,
   totalItems,
+  chagePaginationModel,
+  paginationModel,
 }: PokemonTableProps) => {
   const columns = POKEMON_TABLE_COLUMNS;
-  const [paginationModel, setPaginationMoel] = useState<GridPaginationModel>({
-    page: 0,
-    pageSize: 0,
-  });
 
   const handleChangePage = (
     model: GridPaginationModel,
     details: GridCallbackDetails<any>
   ) => {
-    setPaginationMoel(model);
+    chagePaginationModel(model);
   };
+
+  console.log("PAGINATION:", paginationModel);
   return (
     <>
       {pokemonList && PokemonList.length > 0 && (

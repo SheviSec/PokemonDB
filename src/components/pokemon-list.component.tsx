@@ -5,7 +5,14 @@ import { PokemonTable } from "./pokemon-table/pokemon-table.component";
 type Pokemonlist = {};
 
 export const PokemonList = ({}: Pokemonlist) => {
-  const { pokemonList, isLoading, totalItems } = usePokemon();
+  const {
+    pokemonList,
+    isLoading,
+    totalItems,
+    changePaginationModel,
+    paginationModel,
+    error,
+  } = usePokemon();
 
   const pokemonListResults = pokemonList ?? [];
 
@@ -17,6 +24,8 @@ export const PokemonList = ({}: Pokemonlist) => {
           isLoading={isLoading}
           pokemonList={pokemonListResults}
           totalItems={totalItems}
+          chagePaginationModel={changePaginationModel}
+          paginationModel={paginationModel}
         />
       </CardContent>
     </Card>

@@ -13,16 +13,24 @@ type UsePokemonReturn = {
   isLoading: boolean;
   error: Error | undefined;
   totalItems: number;
+  changePaginationModel: (paginationModel: PaginationModel) => void;
+  paginationModel: PaginationModel;
 };
 
-type pagination = {};
+export type PaginationModel = {
+  page: number;
+  pageSize: number;
+};
 
 export const usePokemon = (): UsePokemonReturn => {
   const [data, setData] = useState<PokemonList | undefined>();
   const [isLoading, setLoading] = useState(true);
   const [error, setError] = useState<Error | undefined>();
   const [pokemonList, setPokemonList] = useState<Pokemon[] | undefined>();
-  const [pagination, setPagination] = useState();
+  const [paginationModel, setPaginationModel] = useState<PaginationModel>({
+    page: 0,
+    pageSize: 20,
+  });
 
   /**
    * Get pokemon list, only names and url to get individual data
@@ -69,5 +77,18 @@ export const usePokemon = (): UsePokemonReturn => {
       });
   }, [data, setError, setPokemonList]);
 
-  return { pokemonList, isLoading, error, totalItems: data?.count ?? 0 };
+  const changePaginationModel = (paginationModel: PaginationModel) => {
+    setPaginationModel(paginationModel);
+  };
+
+  const totalItems = data?.count ?? 0;
+
+  return {
+    pokemonList,
+    isLoading,
+    error,
+    totalItems: totalItems,
+    changePaginationModel,
+    paginationModel,
+  };
 };
