@@ -1,9 +1,13 @@
 import { Pokemon } from "@/types/pokemon.type";
 import { GridColDef } from "@mui/x-data-grid";
-import { PokemonImg } from "../pokemon-img.component";
+import { PokemonImg } from "../common/pokemon-img.component";
 import { Box } from "@mui/material";
 
 export const POKEMON_TABLE_COLUMNS: GridColDef<Pokemon>[] = [
+  {
+    field: "id",
+    headerName: "Nº",
+  },
   {
     field: "image",
     headerName: "Image",

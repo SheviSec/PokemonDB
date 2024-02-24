@@ -1,11 +1,11 @@
-import { PokemonList } from "@/components/pokemon-list.component";
-import { Container } from "@mui/material";
+import { DefaultLayout } from "@/layouts/default.layout";
+import { PokemonList } from "@/components/pokemon-list/pokemon-list.component";
 
 const HomePage = () => {
   return (
-    <Container>
+    <DefaultLayout>
       <PokemonList />
-    </Container>
+    </DefaultLayout>
   );
 };
 

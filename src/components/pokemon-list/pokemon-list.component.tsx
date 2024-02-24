@@ -1,20 +1,22 @@
 import { usePokemon } from "@/hooks/use-pokemon.hook";
 import { Card, CardContent, CardHeader } from "@mui/material";
-import { PokemonTable } from "./pokemon-table/pokemon-table.component";
+import { PokemonTable } from "../pokemon-table/pokemon-table.component";
+import { usePokemonFromDB } from "@/hooks/use-pokemon.-from-db.hook";
+import { usePokemonList } from "./use-pokemon-list.hook";
 
 type Pokemonlist = {};
 
 export const PokemonList = ({}: Pokemonlist) => {
   const {
-    pokemonList,
+    data,
+    error,
     isLoading,
-    totalItems,
     changePaginationModel,
     paginationModel,
-    error,
-  } = usePokemon();
+    totalItems,
+  } = usePokemonList();
 
-  const pokemonListResults = pokemonList ?? [];
+  const pokemonListResults = data?.items ?? [];
 
   return (
     <Card sx={{ height: "100%" }}>

@@ -1,7 +1,7 @@
 import { Pokemon } from "@/types/pokemon.type";
 import { useEffect, useState } from "react";
 
-type PokemonList = {
+export type PokemonList = {
   count: number;
   next: string | null;
   previous: string | null;
@@ -9,6 +9,7 @@ type PokemonList = {
 };
 
 type UsePokemonReturn = {
+  data: PokemonList | undefined;
   pokemonList: Pokemon[] | undefined;
   isLoading: boolean;
   error: Error | undefined;
@@ -36,10 +37,13 @@ export const usePokemon = (): UsePokemonReturn => {
    * Get pokemon list, only names and url to get individual data
    */
   useEffect(() => {
-    fetch("https://pokeapi.co/api/v2/pokemon")
+    fetch(
+      `https://pokeapi.co/api/v2/pokemon?limit=${
+        paginationModel.pageSize
+      }&offset=${paginationModel.page * paginationModel.pageSize}`
+    )
       .then((res) => {
         if (!res.ok) {
-          // throw new Error("Failed to fetch data");
           setError(new Error("Failed to fetch data"));
         }
         return res.json();
@@ -47,7 +51,7 @@ export const usePokemon = (): UsePokemonReturn => {
       .then((data) => {
         setData(data);
       });
-  }, [setData, setLoading]);
+  }, [setData, setLoading, paginationModel]);
 
   /**
    * get list with all single pokemon data
@@ -90,5 +94,6 @@ export const usePokemon = (): UsePokemonReturn => {
     totalItems: totalItems,
     changePaginationModel,
     paginationModel,
+    data,
   };
 };

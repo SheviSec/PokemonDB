@@ -3,17 +3,20 @@ import {
   DataGrid,
   GridCallbackDetails,
   GridPaginationModel,
+  GridRowParams,
 } from "@mui/x-data-grid";
 import { POKEMON_TABLE_COLUMNS } from "./pokemon-table-columns.helper";
-import { useState } from "react";
-import { PokemonList } from "../pokemon-list.component";
+import { PokemonList } from "../pokemon-list/pokemon-list.component";
 import { PaginationModel } from "@/hooks/use-pokemon.hook";
+import { useState } from "react";
+import { Card, ClickAwayListener, Drawer } from "@mui/material";
+import { PokemonSheet } from "../pokemon-sheet/pokemon-sheet.component";
 
 type PokemonTableProps = {
   pokemonList: Pokemon[];
   isLoading: boolean;
   totalItems: number;
-  paginationModel: PaginationModel;
+  paginationModel: PaginationModel | undefined;
   chagePaginationModel: (paginationModel: PaginationModel) => void;
 };
 export const PokemonTable = ({
@@ -32,7 +35,13 @@ export const PokemonTable = ({
     chagePaginationModel(model);
   };
 
-  console.log("PAGINATION:", paginationModel);
+  const handleRowClick = (params: GridRowParams<Pokemon>) => {
+    const pokemon = params.row;
+    setPokemonSheet(pokemon);
+  };
+
+  const [pokemonSheet, setPokemonSheet] = useState<Pokemon | undefined>();
+
   return (
     <>
       {pokemonList && PokemonList.length > 0 && (
@@ -40,7 +49,7 @@ export const PokemonTable = ({
           autoPageSize
           autoHeight
           pagination
-          pageSizeOptions={[20, 50, 100]}
+          pageSizeOptions={[10, 20, 50, 100]}
           paginationMode="server"
           onPaginationModelChange={handleChangePage}
           paginationModel={paginationModel}
@@ -48,8 +57,17 @@ export const PokemonTable = ({
           columns={columns}
           rows={pokemonList}
           rowCount={totalItems}
+          onRowClick={handleRowClick}
         />
       )}
+      <Drawer anchor="right" variant="persistent" open={!!pokemonSheet}>
+        {pokemonSheet && (
+          <PokemonSheet
+            pokemon={pokemonSheet}
+            onClose={() => setPokemonSheet(undefined)}
+          />
+        )}
+      </Drawer>
     </>
   );
 };
