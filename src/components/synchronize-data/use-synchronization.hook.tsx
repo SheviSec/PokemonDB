@@ -35,7 +35,7 @@ export const useSynchronization = () => {
   }, [allPokemonData, insertPokemonToDB, setIsLoading]);
 
   useEffect(() => {
-    fetch(`https://pokeapi.co/api/v2/pokemon?limit=50`)
+    fetch(`https://pokeapi.co/api/v2/pokemon?limit=2000`)
       .then((res) => {
         if (!res.ok) {
           throw new Error("Failed to fetch data");
