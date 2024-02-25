@@ -18,7 +18,29 @@ export const PokemonSheet = ({ pokemon, onClose }: PokemonSheetProps) => {
         imgProps={{ style: { width: "100%" } }}
       />
       <PokemonImg
+        url={pokemon.sprites.other?.["official-artwork"].front_shiny ?? ""}
+        imgProps={{ style: { width: "100%" } }}
+      />
+      <PokemonImg
         url={pokemon.sprites.other.showdown.front_default ?? ""}
+        imgProps={{ style: { width: "48px" } }}
+      />
+      <PokemonImg
+        url={pokemon.sprites.other.showdown.front_shiny ?? ""}
+        imgProps={{ style: { width: "48px" } }}
+      />
+      <PokemonImg
+        url={pokemon.sprites.other.showdown.back_default ?? ""}
+        imgProps={{ style: { width: "48px" } }}
+      />
+
+      <PokemonImg
+        url={pokemon.sprites.other.home.front_default ?? ""}
+        imgProps={{ style: { width: "100%" } }}
+      />
+
+      <PokemonImg
+        url={pokemon.sprites.front_default ?? ""}
         imgProps={{ style: { width: "48px" } }}
       />
       <Button variant="contained" onClick={onClose}>
