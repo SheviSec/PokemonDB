@@ -95,7 +95,7 @@ export class IndexedDb {
           true
         )
       : IDBKeyRange.bound(1, this.pageLimit);
-    const data = await store.getAll(query, this.pageLimit);
+    const data = await store.getAll(query);
     return { data, count };
   }
 

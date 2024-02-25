@@ -15,7 +15,7 @@ export const useSynchronization = () => {
   const insertPokemonToDB = useCallback(
     async (data: Pokemon) => {
       const result = await db.putValue("pokemon", data);
-      setIsLoadingData(`Catching ${data.name}`);
+      setIsLoadingData(`Catching #${data.id} ${data.name}`);
       return result;
     },
     [setIsLoadingData]
