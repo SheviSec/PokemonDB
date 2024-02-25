@@ -1,7 +1,7 @@
 import {
   PokemonData,
   usePokemonFromDB,
-} from "@/hooks/use-pokemon.-from-db.hook";
+} from "@/hooks/use-pokemon-from-db.hook";
 import { PaginationModel } from "@/hooks/use-pokemon.hook";
 import { Pokemon } from "@/types/pokemon.type";
 import { useState } from "react";

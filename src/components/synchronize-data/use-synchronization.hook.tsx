@@ -8,6 +8,7 @@ export const useSynchronization = () => {
   const [allPokemonData, setAllPokemonData] = useState<Pokemon[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isLoadingData, setIsLoadingData] = useState<string | undefined>();
+  const [dataInserted, setDataInserted] = useState(false); // Flag to track data insertion
 
   const db = new IndexedDb("PokemonDB", "pokemon");
 
@@ -28,7 +29,6 @@ export const useSynchronization = () => {
         })
       );
       setIsLoading(false);
-      console.log("All Pokémon inserted!");
     } catch (error) {
       console.error("Error inserting Pokémon:", error);
     }
@@ -40,36 +40,47 @@ export const useSynchronization = () => {
         if (!res.ok) {
           throw new Error("Failed to fetch data");
         }
+        setIsLoadingData(`Entering to tall grass...`);
         return res.json();
       })
       .then((data) => {
         setData(data);
       });
-  }, []);
+  }, [setIsLoadingData, setData]);
 
   useEffect(() => {
     if (!data) return;
     Promise.all(
-      data.results.map((item) => {
+      data.results.map(async (item) => {
         return fetch(`https://pokeapi.co/api/v2/pokemon/${item.name}`)
           .then((res) => {
             if (!res.ok) {
               throw new Error("Failed to fetch data");
             }
+            setIsLoadingData("Identifying species...");
             return res.json();
           })
           .then((data) => {
-            setAllPokemonData((prev) => [...prev, data]);
+            return data;
           });
       })
-    );
-  }, [data]);
+    ).then((data) => {
+      setAllPokemonData(data);
+    });
+  }, [data, setIsLoadingData, setAllPokemonData]);
 
   useEffect(() => {
-    if (allPokemonData.length > 0) {
+    if (allPokemonData.length > 0 && !dataInserted) {
       insertAllPokemonToDb();
+      setDataInserted(true); // Set the flag to true after data insertion
     }
   }, [allPokemonData, insertAllPokemonToDb]);
 
-  return { allPokemonData, isLoading, isLoadingData };
+  return {
+    allPokemonData,
+    isLoading,
+    isLoadingData,
+    setDataInserted,
+    dataInserted,
+  };
 };

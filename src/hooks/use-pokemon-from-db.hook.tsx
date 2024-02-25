@@ -34,7 +34,6 @@ export const usePokemonFromDB = ({ pagination }: UsePokemonFromDBProps) => {
       .getAllValue("pokemon", paginationModel)
       .then((result) => {
         if (!result) setError(new Error("NO DATA!"));
-        console.log(result, paginationModel);
         setData({ items: result.data, totalItems: result.count });
         setIsLoading(false);
         return result;
