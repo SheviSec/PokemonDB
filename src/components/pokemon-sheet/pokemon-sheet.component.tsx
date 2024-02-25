@@ -17,6 +17,10 @@ export const PokemonSheet = ({ pokemon, onClose }: PokemonSheetProps) => {
         url={pokemon.sprites.other?.["official-artwork"].front_default ?? ""}
         imgProps={{ style: { width: "100%" } }}
       />
+      <PokemonImg
+        url={pokemon.sprites.other.showdown.front_default ?? ""}
+        imgProps={{ style: { width: "48px" } }}
+      />
       <Button variant="contained" onClick={onClose}>
         Close
       </Button>
